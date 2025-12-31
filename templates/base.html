@@ -1,0 +1,37 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{% block title %}Simple Shop{% endblock %}</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'site.css' %}" />
+  </head>
+  <body>
+    <header>
+      <nav>
+        <a href="{% url 'public:product_list' %}">Products</a>
+        <a href="{% url 'support_public:ticket_create' %}">Support</a>
+        {% if user.is_authenticated and user.is_staff %}
+          <a href="{% url 'staff:dashboard' %}">Staff</a>
+        {% endif %}
+        <span style="float:right">
+          {% if user.is_authenticated %}
+            <span class="small">{{ user.get_username }}</span>
+            <a href="{% url 'accounts:logout' %}">Logout</a>
+          {% else %}
+            <a href="{% url 'accounts:login' %}">Login</a>
+          {% endif %}
+        </span>
+      </nav>
+    </header>
+    <main>
+      {% if messages %}
+        {% for message in messages %}
+          <div class="card">{{ message }}</div>
+        {% endfor %}
+      {% endif %}
+      {% block content %}{% endblock %}
+    </main>
+  </body>
+</html>

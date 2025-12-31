@@ -1,0 +1,11 @@
+{% extends 'base.html' %}
+{% block title %}Order Submitted{% endblock %}
+{% block content %}
+  <h1>Order submitted</h1>
+  <div class="card">
+    <p><strong>Order #:</strong> {{ order.id }}</p>
+    <p><strong>Status:</strong> {{ order.get_status_display }}</p>
+    <p class="small">A staff member can view this order in the staff dashboard.</p>
+  </div>
+  <p><a class="btn" href="{% url 'public:product_list' %}">Back to products</a></p>
+{% endblock %}

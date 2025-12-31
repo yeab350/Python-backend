@@ -1,0 +1,39 @@
+{% extends 'base.html' %}
+{% block title %}Ticket #{{ ticket.id }}{% endblock %}
+{% block content %}
+  <h1>Ticket #{{ ticket.id }}</h1>
+
+  <div class="card">
+    <p><strong>Subject:</strong> {{ ticket.subject }}</p>
+    <p><strong>Customer:</strong> {{ ticket.customer_name }} ({{ ticket.customer_email }})</p>
+    <p><strong>Status:</strong> {{ ticket.get_status_display }}</p>
+  </div>
+
+  <h2>Conversation</h2>
+  {% for m in ticket.messages.all %}
+    <div class="card">
+      <p class="small">
+        <strong>{{ m.get_sender_display }}</strong>
+        — {{ m.created_at }}
+        {% if m.created_by %} ({{ m.created_by.get_username }}){% endif %}
+      </p>
+      {{ m.body|linebreaks }}
+    </div>
+  {% empty %}
+    <p class="small">No messages yet.</p>
+  {% endfor %}
+
+  <h2>Reply</h2>
+  <form method="post" action="{% url 'support_staff:ticket_reply' ticket.id %}">
+    {% csrf_token %}
+    {{ reply_form.as_p }}
+    <button type="submit">Send reply</button>
+  </form>
+
+  <h2>Update status</h2>
+  <form method="post" action="{% url 'support_staff:ticket_update_status' ticket.id %}">
+    {% csrf_token %}
+    {{ status_form.as_p }}
+    <button type="submit">Save status</button>
+  </form>
+{% endblock %}

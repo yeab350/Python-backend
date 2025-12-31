@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+{% block title %}Support{% endblock %}
+{% block content %}
+  <h1>Customer support</h1>
+  <p class="small">Submit a message and a staff member will respond.</p>
+
+  <form method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">Submit ticket</button>
+  </form>
+{% endblock %}

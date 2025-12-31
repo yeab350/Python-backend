@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+{% block title %}{{ product.name }}{% endblock %}
+{% block content %}
+  <h1>{{ product.name }}</h1>
+  <p><strong>Price:</strong> ${{ product.price }}</p>
+  {% if product.description %}
+    <div class="card">
+      {{ product.description|linebreaks }}
+    </div>
+  {% endif %}
+
+  <div class="card">
+    <p><a class="btn" href="{% url 'sales_public:order_create' product.slug %}">Place an order</a></p>
+  </div>
+{% endblock %}

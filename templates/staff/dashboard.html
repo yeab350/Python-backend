@@ -1,0 +1,11 @@
+{% extends 'base.html' %}
+{% block title %}Staff Dashboard{% endblock %}
+{% block content %}
+  <h1>Staff dashboard</h1>
+  <div class="card">
+    <p><a class="btn" href="/staff/products/">Manage products</a></p>
+    <p><a class="btn" href="/staff/orders/">View orders</a></p>
+    <p><a class="btn" href="/staff/tickets/">Support tickets</a></p>
+    <p class="small">Tip: Django admin is also available at <a href="/admin/">/admin/</a>.</p>
+  </div>
+{% endblock %}

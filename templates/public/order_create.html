@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+{% block title %}Order: {{ product.name }}{% endblock %}
+{% block content %}
+  <h1>Place an order</h1>
+  <div class="card">
+    <p><strong>Product:</strong> {{ product.name }}</p>
+    <p><strong>Unit price:</strong> ${{ product.price }}</p>
+  </div>
+
+  <form method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">Submit order</button>
+    <a class="btn secondary" href="{% url 'public:product_detail' product.slug %}">Cancel</a>
+  </form>
+{% endblock %}

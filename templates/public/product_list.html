@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+{% block title %}Products{% endblock %}
+{% block content %}
+  <h1>Products</h1>
+
+  {% if products %}
+    <table class="table">
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Price</th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for p in products %}
+          <tr>
+            <td>{{ p.name }}</td>
+            <td>${{ p.price }}</td>
+            <td><a class="btn secondary" href="{% url 'public:product_detail' p.slug %}">View</a></td>
+          </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  {% else %}
+    <p class="small">No published products yet.</p>
+  {% endif %}
+{% endblock %}

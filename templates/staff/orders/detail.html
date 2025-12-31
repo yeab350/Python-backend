@@ -1,0 +1,40 @@
+{% extends 'base.html' %}
+{% block title %}Order #{{ order.id }}{% endblock %}
+{% block content %}
+  <h1>Order #{{ order.id }}</h1>
+
+  <div class="card">
+    <p><strong>Customer:</strong> {{ order.customer_name }} ({{ order.customer_email }})</p>
+    <p><strong>Status:</strong> {{ order.get_status_display }}</p>
+    <p><strong>Total:</strong> ${{ order.total_amount }}</p>
+  </div>
+
+  <h2>Items</h2>
+  <table class="table">
+    <thead>
+      <tr>
+        <th>Product</th>
+        <th>Qty</th>
+        <th>Unit price</th>
+        <th>Line total</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for item in order.items.all %}
+        <tr>
+          <td>{{ item.product.name }}</td>
+          <td>{{ item.quantity }}</td>
+          <td>${{ item.unit_price }}</td>
+          <td>${{ item.line_total }}</td>
+        </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+
+  <h2>Update status</h2>
+  <form method="post" action="{% url 'sales_staff:order_update_status' order.id %}">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">Save status</button>
+  </form>
+{% endblock %}
