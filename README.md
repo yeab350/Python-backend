@@ -1,4 +1,4 @@
-# Simple Django Admin + Public Site (Backend-focused)
+# Reusable Django Backend API (No Frontend)
 
 ## Setup
 
@@ -21,11 +21,36 @@
 
    - `\.venv\Scripts\python manage.py runserver`
 
-## URLs
+## API URLs
 
-- Public catalog: `http://127.0.0.1:8000/`
-- Public support form: `http://127.0.0.1:8000/support/`
-- Staff dashboard: `http://127.0.0.1:8000/staff/`
+- Health: `GET http://127.0.0.1:8000/api/health/`
+- Auth token: `POST http://127.0.0.1:8000/api/auth/token/` (body: `{"username": "...", "password": "..."}`)
+- Current user: `GET http://127.0.0.1:8000/api/auth/me/` (header: `Authorization: Token <token>`)
+- Logout (delete token): `POST http://127.0.0.1:8000/api/auth/logout/`
+
+### Resources
+
+- Products: `GET /api/products/`, `GET /api/products/<slug>/`
+   - Write operations require a staff user token.
+- Orders: `POST /api/orders/` (public)
+   - List/retrieve require a staff user token.
+- Tickets: `POST /api/tickets/` (public)
+   - List/retrieve require a staff user token.
+   - Add message: `POST /api/tickets/<id>/messages/`
+      - Staff: `Authorization: Token ...`
+      - Anonymous: include `customer_email` matching the ticket.
+
+## CORS (use from any website)
+
+By default CORS is open in development (`DJANGO_DEBUG=1`).
+
+For production, set one of:
+
+- `CORS_ALLOW_ALL_ORIGINS=1` (allow any frontend)
+- or `CORS_ALLOWED_ORIGINS=https://your-frontend.com,https://another.com`
+
+## Admin
+
 - Django admin: `http://127.0.0.1:8000/admin/`
 
 ## Database

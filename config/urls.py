@@ -19,9 +19,5 @@ from django.urls import include, path
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', include(('catalog.public_urls', 'public'), namespace='public')),
-    path('support/', include(('support.public_urls', 'support_public'), namespace='support_public')),
-    path('orders/', include(('sales.public_urls', 'sales_public'), namespace='sales_public')),
-    path('accounts/', include(('accounts.urls', 'accounts'), namespace='accounts')),
-    path('staff/', include(('accounts.staff_urls', 'staff'), namespace='staff')),
+    path('api/', include('config.api_urls')),
 ]
